@@ -1,0 +1,103 @@
+<div ng-controller="PorukeCtrl">
+<br>
+<br>
+<br>
+<form>
+		<div class="form-group">
+			<label for="rnaslov">Naslov</label>
+			<input class="form-control" id="rnaslov" ng-model="poruka.naslov" />
+		</div>
+		<div class="form-group">
+			<label for="rtip">Tip</label>
+			<select class="form-control" ng-model="poruka.tip" id="rtip">
+				<option value="predlog">Predlog</option>
+				<option value="obavestenje">Obavestenje</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<label for="ropis">Opis</label>
+			<input class="form-control" id="ropis" ng-model="poruka.opis"/>
+		</div>
+		<div ng-if="poruka.tip == 'predlog'" class="form-group">
+			<label for="rprocenat">Potreban procenat</label>
+			<input class="form-control" id="rprocenat" ng-model="poruka.potrebanProcenat"/>
+		</div>
+		
+		<div class="form-group">
+			<label for="rzgrade">Zgrada</label>
+			<select class="form-control" ng-model="poruka.zgradaId" id="rzgrade">
+				<option ng-repeat="z in zgrade" value="{{z.id}}">{{z.adresa}}</option>
+			</select>
+		</div>
+		
+		<button class="btn btn-primary" ng-click="doAdd()">Dodaj</button>
+	</form>
+
+	<div class="w-50 p-3">
+		<h3>Pretraga poruka</h3>
+		<form>
+			
+			<div class="form-group">
+			<label for="rzgrade">Zgrada</label>
+			<select class="form-control" ng-model="sParams.zgradaId" id="rzgrade">
+				<option ng-repeat="z in zgrade" value="{{z.id}}">{{z.adresa}}</option>
+			</select>
+		</div>
+			<div class="form-group">
+				<label for="snaslov">Naslov</label>
+				<input ng-model="sParams.naslov" id="snaslov" class="form-control">
+			</div>
+			<div class="form-group">
+				<label for="stip">Tip</label>
+				<select class="form-control" ng-model="sParams.tip" id="stip">
+					<option value="predlog">Predlog</option>
+					<option value="obavestenje">Obavestenje</option>
+				</select>
+			</div>
+
+			
+			<button ng-click="doSearch()" class="btn btn-primary">Trazi</button>
+			<button ng-click="doClear()" class="btn btn-primary">Obrisi pretragu</button>
+		</form>
+	
+	
+	</div>
+
+
+
+
+
+
+<div class="btn-group float-right">
+		<button ng-disabled="pageNum == 0" ng-click="changePage(-1)" class="btn btn-info">Nazad</button>
+		<button ng-disabled="pageNum == totalPages - 1" ng-click="changePage(1)" class="btn btn-info">Napred</button>
+		
+	</div>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Naslov</th>
+				<th>Tip</th>
+				<th>Opis</th>
+				<th>Potreban %</th>
+				<th>Zgrada</th>
+				<th>Akcije</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="p in poruke">
+				<td>{{p.naslov}}</td>
+				<td>{{p.tip}}</td>
+				<td>{{p.opis}}</td>
+				<td ng-if="p.tip =='predlog'">{{p.potrebanProcenat}} %</td>
+				<td ng-if="p.tip =='obavestenje'"></td>
+				<td>{{p.zgradaNaziv}}</td>
+				<td>
+					<button class="btn btn-warning" ng-click="goToEdit(p.id)">Izmeni</button>
+					<button class="btn btn-danger" ng-click="doObrisi(p.id)">Obrisi</button>
+					<button ng-if="p.tip =='predlog'" class="btn btn-success" ng-click="goToGlasaj(p.id)" ng-disabled="p.prihvacen == true">Glasaj</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

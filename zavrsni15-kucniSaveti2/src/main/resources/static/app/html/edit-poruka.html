@@ -1,0 +1,38 @@
+<div ng-controller="EditPorukaCtrl">
+<br>
+<br>
+<br>
+<form>
+	<div class="form-group">
+			<label for="rnaziv">Naziv</label>
+			<input class="form-control" id="rnaziv" ng-model="ucesnik.naziv" />
+		</div>
+		<div class="form-group">
+			<label for="rmesto">Mesto</label>
+			<input class="form-control" id="rmesto" ng-model="ucesnik.mesto"/>
+		</div>
+		<div class="form-group">
+			<label for="rkontakt">Kontakt</label>
+			<input class="form-control" id="rkontakt" ng-model="ucesnik.email" placeholder="Email"/>
+		</div>
+		
+		<div class="form-group">
+			<label for="rtakmicenja">Takmicenje</label>
+			<select class="form-control" ng-model="ucesnik.takmicenjeId" id="rtakmicenja">
+				<option ng-repeat="t in takmicenja" value="{{t.id}}">{{t.naziv}}</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<label for="rodigrano">Odigranih susreta</label>
+			<input class="form-control" id="rodigrano" ng-model="ucesnik.odigranoSusreta"/>
+		</div>
+		<div class="form-group">
+			<label for="rbodovi">Bodovi</label>
+			<input class="form-control" id="rbodovi" ng-model="ucesnik.brojBodova"/>
+		</div>
+		
+		
+		<button class="btn btn-primary" ng-click="doEdit()">Izmeni</button>
+	</form>
+
+</div>
